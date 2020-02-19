@@ -44,14 +44,40 @@
 
         Class<?>[] scanBasePackagesClasses: Type-safe alternative to {@link #scanBasePackages} for specific the packagesto scan for annotated components. The package of each class specified will be scanned.
 
-        boolean proxyBeanMethods: Specify whether @Bean methods should get proxied in order to enforce bean lifecycle behavior.
+        boolean proxyBeanMethods: Specify whether @Bean methods should get proxied in order to enforce bean lifecycle behavior.(指定是否应代理@Bean方法以强制执行bean生命周期行为)
 
 - @Controller
 
+    @Controller Indicates that an annotated class is a "Controller"(e.g. a web controller)
+
 - @XmlRootElement
+
+    @XmlRootElement Maps a class or an enum type to an XML element.
 
 - @Component
 
+    @Component Indicates that an annotated class is a "component". Such classes are considered as candidates for auto-detection when using annotation-based configuration and classpath scanning.
+
 - @RequestMapping
+
+    @RequestMapping Annotation for mapping web requests onto methods in request-handling classes with flexible method signatures. Note: This annotation can be used both at the class and at the method level. In most cases, at the method level applications will prefer to use one of the HTTP method specific variants @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping.
+
+    属性：
+
+        String name:
+
+        String[] value: 
+
+        String[] path:
+
+        RequestMethod[] method:
+
+        String params:
+
+        String[] headers:
+
+        String[] consumes:
+
+        String[] produces:
 
 - @AliasFor
