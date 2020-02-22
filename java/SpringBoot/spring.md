@@ -64,20 +64,20 @@
 
     属性：
 
-        String name:
+        String name: Assign a name to this mapping.
 
-        String[] value: 
+        String[] value: The primary mapping expressed by this annotation. This is an alias for #path. (e.g. {@code @RequestMaping("/foo/")} is equivalent to {@code @RequestMapping(path="/foo")}) NOTE: A handler method that is not mapped to any path explicitly is effectively mapped to any empty path.
 
-        String[] path:
+        String[] path: The path mapping URIs. NOTE: A handler method that is not mapped to any path explicitly is effectively mapped to any empty path.
 
-        RequestMethod[] method:
+        RequestMethod[] method: The HTTP request methods to map to, narrowing the primary mapping: GET, POST, HEAD, OPTION, PUT, PATCH, DELETE, TRACE.
 
-        String params:
+        String params: The parameter of the mapped request, narrowing the primary mapping. The primary path mapping still has to uniquely identify the target handler, with parameter mappings simply expressing preconditions for invoking the handler.
 
-        String[] headers:
+        String[] headers: The headers of the mapped request, narrowing the primary mapping.
 
-        String[] consumes:
+        String[] consumes: Narrows the primary mapping by media types that can be consumed by the mapped handler. Consists of one or more media types one of which mush match to the request {@code Content-Type} header.
 
-        String[] produces:
+        String[] produces: Narrows the primary mapping by media types that can be produced by the mapped handler. Consists of one or more media types one of which must be chosed via content negotiation the "acceptable" media types of the request. Typically those are extracted from the {@code "Accept"} header but may be derived from query parameters, or other.
 
 - @AliasFor
