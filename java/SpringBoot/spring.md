@@ -81,3 +81,45 @@
         String[] produces: Narrows the primary mapping by media types that can be produced by the mapped handler. Consists of one or more media types one of which must be chosed via content negotiation the "acceptable" media types of the request. Typically those are extracted from the {@code "Accept"} header but may be derived from query parameters, or other.
 
 - @AliasFor
+
+    @AliasFor is an annotation that is used to declare aliases for annotation attributes.
+
+    使用场景：
+
+        1. Explicit aliases within an annotation: Each attribute that makes up an aliased pair should be annotated with @AliasFor, and either #attribute or #value must reference the other attribute in the pair.
+
+        2. Explicit alias for attribute in meta-annotation: The attribute that is an alias for an attribute in a meta-annotation must be annotated with @AliasFor, and #attribute must reference the attribute in the meta-annotation.
+
+        3. Implicit aliases within an annotation: Each attribute that belongs to a set of implicit aliases must be annotated with @AliasFor, and #attribute must reference the same attribute in the same meta-annotation (either directly or transitively via other explicit meta-annotation attribute overrides within the annotation hierarchy).
+
+    Notes:
+
+    Explicit aliases within an annotation
+
+        Aliased attributes must declare the same return type.
+
+        Aliased attributes must declare a default value.
+
+        Aliased attributes must declare the same default value.
+
+        {@like #annotation} should not be declared.
+
+    Explicit alias for attribute in meta-annotation
+
+        Aliased attributes must declare the same return type.
+
+        {@link #annotation} must reference the meta-annotation.
+
+        The referenced meta-annotation must be meta-present on the annotation class that declares {@code @AliasFor}.
+
+    Implicit aliases within an annotation
+
+        Aliased attributes must declare the same return type.
+
+        Aliased attributes must declare a default value.
+
+        Aliased attributes must declare the same default value.
+
+        {@link #annotation} must reference an appropriate meta-annotation.
+
+        The referenced meta-annotation must be meta-present on the annotation class that declares {@code @AliasFor}.
