@@ -6,17 +6,11 @@
 
 #### 1.1 类上注解
 
-- @MappedSuperclass
+**@MappedSuperclass** 代表使用该注解的类是一个超类，不会实例化到数据库表中，用于封装公用属性提供给子类
 
-    @MappedSuperclass 代表使用该注解的类是一个超类，不会实例化到数据库表中，用于封装公用属性提供给子类
+**@Entity** 使用该注解的累将会被实体化映射到数据库表中
 
-- @Entity
-
-    @Entity 使用该注解的累将会被实体化映射到数据库表中
-
-- @Table
-
-    @Table 该注解表示标识了实体类与数据库表的对应关系
+**@Table** 该注解表示标识了实体类与数据库表的对应关系
 
     属性：
 
@@ -30,9 +24,7 @@
     
         indexes: Indexes for the table. These are only used if table generation is in effect. Note that it is not necessary to specify an index for a primary key, as the primary key index will be created automatically.
 
-- @SpringBootApplication
-
-    @SpringBootApplication 等同于同时声明了@SpringBootConfiguration,@EnableAutoConfiguration,@ComponentScan
+**@SpringBootApplication** 等同于同时声明了@SpringBootConfiguration,@EnableAutoConfiguration,@ComponentScan
 
     属性：
 
@@ -46,21 +38,13 @@
 
         boolean proxyBeanMethods: Specify whether @Bean methods should get proxied in order to enforce bean lifecycle behavior.(指定是否应代理@Bean方法以强制执行bean生命周期行为)
 
-- @Controller
+**@Controller** Indicates that an annotated class is a "Controller"(e.g. a web controller)
 
-    @Controller Indicates that an annotated class is a "Controller"(e.g. a web controller)
+**@XmlRootElement** Maps a class or an enum type to an XML element.
 
-- @XmlRootElement
+**@Component** Indicates that an annotated class is a "component". Such classes are considered as candidates for auto-detection when using annotation-based configuration and classpath scanning.
 
-    @XmlRootElement Maps a class or an enum type to an XML element.
-
-- @Component
-
-    @Component Indicates that an annotated class is a "component". Such classes are considered as candidates for auto-detection when using annotation-based configuration and classpath scanning.
-
-- @RequestMapping
-
-    @RequestMapping Annotation for mapping web requests onto methods in request-handling classes with flexible method signatures. Note: This annotation can be used both at the class and at the method level. In most cases, at the method level applications will prefer to use one of the HTTP method specific variants @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping.
+**@RequestMapping** Annotation for mapping web requests onto methods in request-handling classes with flexible method signatures. Note: This annotation can be used both at the class and at the method level. In most cases, at the method level applications will prefer to use one of the HTTP method specific variants @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @PatchMapping.
 
     属性：
 
@@ -80,9 +64,7 @@
 
         String[] produces: Narrows the primary mapping by media types that can be produced by the mapped handler. Consists of one or more media types one of which must be chosed via content negotiation the "acceptable" media types of the request. Typically those are extracted from the {@code "Accept"} header but may be derived from query parameters, or other.
 
-- @AliasFor
-
-    @AliasFor is an annotation that is used to declare aliases for annotation attributes.
+**@AliasFor** is an annotation that is used to declare aliases for annotation attributes.
 
     使用场景：
 
