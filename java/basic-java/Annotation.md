@@ -14,6 +14,8 @@ public @interface Test {}
 
 > Note: 没有元素的注解成为标记注解，如上面的@Test注解
 
+---
+
 ### 使用注解
 
 ```java
@@ -33,11 +35,11 @@ public class Demo() {
 }
 ```
 
-### 元注解
+---
 
-Java内置了三种标准注解和四种元注解，元注解专职负责注解其他的注解。
+> Java内置了三种标准注解和四种元注解，元注解专职负责注解其他的注解。
 
-#### 标准注解
+### 标准注解
 
 - @Override：表示当前的方法定义将覆盖超类中的方法。
 
@@ -45,55 +47,63 @@ Java内置了三种标准注解和四种元注解，元注解专职负责注解�
 
 - @SuppressWarnings：忽略当前方法出现的警告信息。
 
-#### 元注解
+### 元注解
 
 - @Target：表示该注解可以用于什么地方。
 
     可选的ElementType参数：
 
-        CONSTRUCTOR: 构造器的声明
+    ```no
+    CONSTRUCTOR: 构造器的声明
 
-        FIELD: 域声明（包括enum实例）
+    FIELD: 域声明（包括enum实例）
 
-        LOCAL_VARIABLE: 局部变量声明
+    LOCAL_VARIABLE: 局部变量声明
 
-        METHOD: 方法声明
+    METHOD: 方法声明
 
-        PACKAGE: 包声明
+    PACKAGE: 包声明
 
-        PARAMETER: 参数声明
+    PARAMETER: 参数声明
 
-        TYPE: 类、接口（包括注解类型）或enum声明
+    TYPE: 类、接口（包括注解类型）或enum声明
+    ```
 
 - @Retention：表示需要在什么级别保存该注解信息。
 
     可选的RetentionPolicy参数:
 
-        SOURCE: 注解将在编译器丢弃。
+    ```no
+    SOURCE: 注解将在编译器丢弃。
 
-        CLASS: 注解在class文件中可用，但会被VM丢弃。
+    CLASS: 注解在class文件中可用，但会被VM丢弃。
 
-        RUNTIME: VM将在运行期也保留注解，因此可以通过反射机制读取注解的信息。
+    RUNTIME: VM将在运行期也保留注解，因此可以通过反射机制读取注解的信息。
+    ```
 
 - @Documented：将此注解包含在JavaDoc中。
 
 - @Inherited: 允许子类继承父类中的注解。
 
+---
+
 ### 注解元素
 
 注解元素可用的类型：
 
-    所有基本类型（int, float, boolean等）
+```no
+所有基本类型（int, float, boolean等）
 
-    String
+String
 
-    Class
+Class
 
-    enum
+enum
 
-    Annotation
+Annotation
 
-    以上类型的数组
+以上类型的数组
+```
 
 ### 默认值限制
 
