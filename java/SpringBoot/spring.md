@@ -105,3 +105,49 @@
         {@link #annotation} must reference an appropriate meta-annotation.
 
         The referenced meta-annotation must be meta-present on the annotation class that declares {@code @AliasFor}.
+
+**@Id** 实体主键的类型为整数类型
+
+**@GeneratedValue** Provides for the specification of generation strategies for the values of primary keys.
+
+    GenerationType strategy(): (Optional) The primary key generation strategy that the persistence provider must use to generate the annotated entity primary key
+
+    String generator(): (Optional) The name of the primary key generator to use as specified in the {@link SequenceGenerator} or {@link TableGenerator} annotation. <p> Defaults to the id generator supplied by persistence provider.
+
+> trategy有四种类型可选，分别是：TABLE SEQUENCE IDENTITY AUTO  
+> TABLE: 使用一个特定的数据库表格来保存主键  
+> SEQUENCE: 根据底层数据库的序列来生成主键，条件是数据库支持序列  
+> IDENTITY: 主键由数据库自动生成（主要是自动增长型）  
+> AUTO: 主键由程序控制
+
+**@Column** 对列加上限制
+
+    name
+    unique
+    nullable
+    length
+    columnDefinition: 列的定义，比如列的类型
+    insertable: 在使用 insert 插入数据时，需不需要插入该字段
+    updateable: 在使用 update 更新数据时，需不需要更新该字段
+    table: 包含当前字段的表名
+    precision & scale: 表示精度，当字段类型为Double时，precision 表示数值的总长度，scale 表示小数点所占的位数
+
+**@NotEmpty** The annotated element must not be {@code null} nor empty. String, Collection, Map, arrays不能为null并且长度必须大于0
+
+**@Digits**
+
+**@OneToMany**
+
+**@ManyToOne**
+
+**@Transient**
+
+**@JoinColumn**
+
+**@DateTimeFormat**
+
+**@ModelAttribute**
+
+**@InitBinder**
+
+**@Autowired**
