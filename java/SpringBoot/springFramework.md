@@ -4,6 +4,6 @@
 
 ---
 
-## The Ioc Container
+## IOC容器
 
-### Bean Definition Inheritance
+### Spring IOC容器和Bean简介
