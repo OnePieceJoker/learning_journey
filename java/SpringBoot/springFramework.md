@@ -151,3 +151,30 @@ ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", 
 ##### 组成基于XML的配置元数据
 
 让bean定义跨越多个XML文件可能很有用。通常情况下，每个单独的XML配置文件都代表了架构中的一个逻辑层或模块.
+
+您可以使用应用程序上下文构造函数从所有这些XML片段中加载bean定义。 如上一节中所示，此构造函数具有多个Resource位置。 或者，使用一个或多个``<import />``元素从另一个文件中加载bean定义。
+
+以下示例显示了如何执行此操作
+
+```xml
+<beans>
+    <import resource="services.xml"/>
+    <import resource="resources/messageSource.xml"/>
+    <import resource="/resources/themeSource.xml"/>
+
+    <bean id="bean1" class="..."/>
+    <bean id="bean2" class="..."/>
+</beans>
+```
+
+在前面的例子中，外部Bean定义从三个文件中加载：services.xml、messageSource.xml和themeSource.xml。所有的位置路径都是相对于做导入的定义文件而言的，所以services.xml必须和做导入的文件在同一个目录或classpath位置，而messageSource.xml和themeSource.xml必须在导入文件位置下面的资源位置。
+
+可以看到，前面的斜线被忽略了。然而，鉴于这些路径是相对的，最好不要使用斜线。根据Spring Schema，导入的文件内容，包括顶层的``<beans/>``元素，必须是有效的XML bean定义。
+
+> 注：
+>
+> 可以使用相对路径"./"来引用父目录中的文件，但不建议这样做。这样做会造成对当前应用程序之外的文件的依赖。特别是对于classpath，不推荐使用这种引用。URL（例如，classpath:.../services.xml），在这种情况下，运行时解析过程会选择 "最近的 "classpath根目录，然后查找其父目录。Classpath配置的更改可能会导致选择不同的、不正确的目录。
+>
+> 可以使用完全限定的资源位置而不是相对路径：例如，file:C:/config/services.xml或classpath:/config/services.xml。然而，请注意，您正在将应用程序的配置耦合到特定的绝对位置。一般来说，最好为这样的绝对位置保留一个间接性--例如，通过"${...}"占位符，在运行时针对 JVM 系统属性进行解析。
+
+命名空间本身提供了导入指令功能。 Spring所提供的一系列XML名称空间（例如，上下文和util名称空间）中提供了超出普通bean定义的其他配置功能。
