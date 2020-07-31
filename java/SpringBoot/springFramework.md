@@ -178,3 +178,24 @@ ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", 
 > 可以使用完全限定的资源位置而不是相对路径：例如，file:C:/config/services.xml或classpath:/config/services.xml。然而，请注意，您正在将应用程序的配置耦合到特定的绝对位置。一般来说，最好为这样的绝对位置保留一个间接性--例如，通过"${...}"占位符，在运行时针对 JVM 系统属性进行解析。
 
 命名空间本身提供了导入指令功能。 Spring所提供的一系列XML名称空间（例如，上下文和util名称空间）中提供了超出普通bean定义的其他配置功能。
+
+#### 1.2.3 使用容器
+
+**ApplicationContext**是一个高级工厂的接口，该接口可以维护不同的**bean**及其依赖的注册表.通过使用方法`T getBean(String name, Class<T> requiredType)`，可以检索**bean**的实例.
+
+通过**ApplicationContext**，可以读取**bean**的定义并访问它们，如以下示例所示：
+
+```java
+// create and configure beans
+ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", "daos.xml");
+
+// retrieve configured instance
+PetStoreService service = context.getBean("petStore", PetStoreService.class);
+
+// use configured instance
+List<String> userList = service.getUsernameList();
+```
+
+我们可以在同一ApplicationContext上混合和匹配此类阅读器委托，从不同的配置源读取Bean定义。然后，可以使用getBean检索bean的实例。 ApplicationContext接口还有其他几种检索bean的方法，但是理想情况下，我们的应用程序代码永远不要使用它们。 确实，我们的应用程序代码应该根本不调用`getBean()`方法，因此完全不依赖于Spring API。 例如，Spring与Web框架的集成为各种Web框架组件（如控制器和JSF托管的bean）提供了依赖注入，可以通过元数据（例如自动装配注释）声明对特定bean的依赖。
+
+### 1.3 Bean概述
