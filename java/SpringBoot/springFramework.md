@@ -199,3 +199,74 @@ List<String> userList = service.getUsernameList();
 我们可以在同一ApplicationContext上混合和匹配此类阅读器委托，从不同的配置源读取Bean定义。然后，可以使用getBean检索bean的实例。 ApplicationContext接口还有其他几种检索bean的方法，但是理想情况下，我们的应用程序代码永远不要使用它们。 确实，我们的应用程序代码应该根本不调用`getBean()`方法，因此完全不依赖于Spring API。 例如，Spring与Web框架的集成为各种Web框架组件（如控制器和JSF托管的bean）提供了依赖注入，可以通过元数据（例如自动装配注释）声明对特定bean的依赖。
 
 ### 1.3 Bean概述
+
+一个Spring IoC容器管理一个或多个**bean**. 这些**bean**是通过您提供给容器的配置元数据（例如，以`XML<bean/>`定义的形式）创建的.
+
+在容器本身内，这些**bean**定义表示为**BeanDefination**对象，其中包含（除其他信息外）以下元数据：
+
+- 一个包限定的类名：通常是被定义的bean的实际实现类
+
+- Bean行为配置元素，它说明了bean在容器中的行为方式（作用域，生命周期回调等）
+
+- 对其他Bean的引用，这些引用是bean完成其工作所需要的。这些引用也被称为协作者或依赖关系
+
+- 要在新创建的对象中设置的其他配置设置--例如，池的大小限制或管理连接池的Bean中要使用的连接数
+
+此元数据转换为构成每个Bean定义的一组属性
+
+| Property | Explained in... |
+| -------  | --------- |
+| Class | 实例化Bean |
+| Name | 命名Bean |
+| Scope | Bean的范围 |
+| Constructor arguments | 依赖注入 |
+| Properties | 依赖注入 |
+| Autowiring mode | 自动装配协作器 |
+| Lazy initialization mode | 懒初始化Bean |
+| Initialization method | 初始化回调 |
+| Destruction method | 销毁回调 |
+
+除了包含有关如何创建特定bean的信息的bean定义之外，ApplicationContext实现还允许注册在容器外部（由用户）创建的现有对象。
+
+这是通过`getBeanFactory()`方法访问ApplicationContext的BeanFactory来实现的，该方法返回BeanFactory的DefaultListableBeanFactory实现。
+
+DefaultListableBeanFactory通过`registerSingletom()`和`registerBeanDefinition()`方法支持这种注册。然而，典型的应用程序只使用通过常规Bean定义元数据定义的bean。
+
+> 注：
+>
+> Bean 元数据和手动提供的单子实例需要尽早注册，以便容器在自动布线和其他反省步骤中对它们进行正确的推理。
+>
+> 虽然在一定程度上支持覆盖现有的元数据和现有的单子实例，
+>
+> 但官方并不支持在运行时注册新的bean（与工厂的实时访问同时进行），并且可能导致并发访问异常、bean容器中的状态不一致，或者两者兼而有之。
+
+#### 1.3.1 Bean的命名
+
+每个Bean具有一个或多个标识符. 这些标识符在承载Bean的容器内必须是唯一的。一个bean通常只有一个标识符。但是，如果需要多个，则可以将多余的标识符视为别名.
+
+在基于XML的配置元数据中，可以使用id属性、name属性或两者都使用来指定bean标识符.
+
+id属性可以让我们精确指定一个id. 按照惯例，这些名称可以是字符数字，但它们也可以包含特殊字符. 如果要为bean引入其他别名，还可以在**name**属性中指定它们, 并用逗号(,),分号(;),或空格分隔.
+
+> Bean命名的约定: 按照Java约定的用于实例字段名，开头首字母小写，后续以驼峰格式来区分单词.
+>
+> 通过在类路径中进行组件扫描，Spring会按照前面描述的规则为未命名的组件生成bean名称。一般来说，采用简单的类名并将其初始字符转换为小写。但是，在特殊情况下，如果有多个字符并且第一个和第二个字符均为大写字母，则会保留原始大小写.
+
+##### 在Bean定义之后为Bean创建别名
+
+在基于XML配置元数据中，可以通过使用`<alias/>`元素来完成在别处定义bean的别名。
+
+```xml
+<alias name = "fromName" alias = "toName" />
+```
+
+例如，子系统A的配置元数据可以通过子系统A-dataSource的名称引用数据源。 子系统B的配置元数据可以通过子系统B-dataSource的名称引用数据源。 组成使用这两个子系统的主应用程序时，主应用程序通过myApp-dataSource的名称引用数据源。 要使所有三个名称都引用同一个对象，可以将以下别名定义添加到配置元数据中：
+
+```XML
+<alias name="myApp-dataSource" alias="subsystemA-dataSource"/>
+<alias name="myApp-dataSource" alias="subsystemB-dataSource"/>
+```
+
+> 注：如果是通过Java配置的话，可以通过@Bean注解来提供别名功能.
+
+#### 1.3.2 实例化Bean
