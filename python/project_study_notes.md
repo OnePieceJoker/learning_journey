@@ -10,6 +10,7 @@
 | Github Action         | CI/CD        |
 | Vue 3.0 (typescript)  | 前端实现     |
 | MongoDB               | 数据存储     |
+| Prometheus            | 服务监控     |
 
 ### 工具安装使用
 
@@ -55,3 +56,36 @@
 
 #### 自搭建sentry服务端（Linux）
 
+> 参考: https://develop.sentry.dev/self-hosted/
+
+- 安装docker以及docker-compose
+
+  ```text
+  安装方式（以arch linux为例，更具体的安装方式可以通过搜索引擎解决，这里就不详细赘述）
+  $ sudo pacman -S docker
+  $ sudo pacman -S docker-compose
+  ```
+
+  > 注意：安装完成后重新启动下，后续在执行脚本时，报"Fail: Expected minimum RAM available to Docker to be 2400 MB but found MB"，后通过重启解决。如果报“Fail: Expected minimum RAM available to Docker to be 2400 MB but found 1024 MB"，说明docker提供的内存不够，要调整内存大小
+
+- 从GitHub上clone下官方提供的[安装脚本项目](https://github.com/getsentry/onpremise)(可指定相应的版本)
+
+  ```shell
+  $ git clone -b <tags> git@github.com:getsentry/onpremise.git
+  ```
+
+- 执行 ***install.sh*** 脚本
+
+  ```shell
+  $ ./install.sh
+  ```
+
+- 等待脚本安装完成，中间会有提示需要初始化用户名和密码，供后续sentry服务端网页登录使用，然后执行 ***docker-compose up d*** 命令，创建并开启容器服务
+
+  > Notes: 这里的操作要在git clone下来的目录中执行，本例是在./onpremise目录中
+
+- 通过http://localhost:9000访问sentry
+
+#### MongoDB (Docker)
+
+> $ docker pull mongo
