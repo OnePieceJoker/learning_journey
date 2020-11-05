@@ -10,6 +10,7 @@
 | Github Action         | CI/CD        |
 | Vue 3.0 (typescript)  | 前端实现     |
 | MongoDB               | 数据存储     |
+| PostgreSQL            | 数据存储     |
 | Prometheus            | 服务监控     |
 
 ### 工具安装使用
