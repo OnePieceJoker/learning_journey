@@ -1,10 +1,12 @@
+
+
 # 学习VUE3 + TypeScript
 
 ## 实践：编写一个H5编辑器
 
 ## 前期准备
 
-- [ ] 了解VUE3(TypeScript)版本的项目目录结构
+- [x] 了解VUE3(TypeScript)版本的项目目录结构
 
   ```reStructuredText
   vue3-typescript-demo
@@ -43,7 +45,7 @@
               Home.vue
   ```
 
-  
+- [ ] 学习官方例子，熟悉vue3和typescript的结合使用
 
 - [ ] 学习别人开发的H5编辑器，理解原理，并使用
 
