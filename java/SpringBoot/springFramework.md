@@ -270,3 +270,83 @@ id属性可以让我们精确指定一个id. 按照惯例，这些名称可以�
 > 注：如果是通过Java配置的话，可以通过@Bean注解来提供别名功能.
 
 #### 1.3.2 实例化Bean
+
+Bean的定义实际上就是创建一个或多个对象的方法。容器在被访问时会查看bean的名称，并使用该bean定义封装的配置元数据来创建（或获取）实际对象。
+
+- 通过构造函数实例化Bean
+
+    ```XML
+    <bean id="exampleBean" class="examples.ExampleBean"/>
+
+    <bean name="anotherExample" class="examples.ExampleBeanTwo"/>
+    ```
+
+- 通过静态工厂方法实例化
+
+    ```XML
+    <bean id="clientService"
+    class="examples.ClientService"
+    factory-method="createInstance"/>
+    ```
+
+    ```Java
+    // 通过静态方法返回实例对象
+    public class ClientService {
+        private static ClientService clientService = new ClientService();
+        private ClientService() {}
+
+        public static ClientService createInstance() {
+            return clientService;
+        }
+    }
+    ```
+
+- 通过实例工厂方法来进行实例化
+
+    ```XML
+    <!-- the factory bean, which contains a method called createInstance() -->
+    <bean id="serviceLocator" class="examples.DefaultServiceLocator">
+        <!-- inject any dependencies required by this locator bean -->
+    </bean>
+
+    <!-- the bean to be created via the factory bean -->
+    <bean id="clientService"
+        factory-bean="serviceLocator"
+        factory-method="createClientServiceInstance"/>
+
+    <!-- One factory class can also hold more than one factory method --> 
+    <bean id="accountService"
+        factory-bean="serviceLocator"
+        factory-method="createAccountServiceInstance"/>
+    ```
+
+    ```Java
+    public class DefaultServiceLocator {
+
+        private static ClientService clientService = new ClientServiceImpl();
+
+        private static AccountService accountService = new AccountServiceImpl();
+
+        public ClientService createClientServiceInstance() {
+            return clientService;
+        }
+
+        public AccountService createAccountServiceInstance() {
+            return accountService;
+        }
+    }
+    ```
+
+确定Bean运行时的类型
+
+> The runtime type of a specific bean is non-trivial to determine.  
+>
+> A specified class in the bean metadata definition is just an initial class reference, potentially combined with a declared factory method or being a FactoryBean class which may lead to a different runtime type of the bean, or not being set at all in case of an instance-level factory method (which is resolved via the specified factory-bean name instead).  
+>
+> Additionally, AOP proxying may wrap a bean instance with an interface-based proxy with limited exposure of the target bean’s actual type (just its implemented interfaces).  
+>
+> The recommended way to find out about the actual runtime type of a particular bean is a `BeanFactory.getType` call for the specified bean name.  
+>
+> This takes all of the above cases into account and returns the type of object that a `BeanFactory.getBean` call is going to return for the same bean name.
+
+### 1.4 Dependencies
