@@ -11,6 +11,8 @@
 | Vue 3.0 (typescript)  | 前端实现     |
 | MongoDB               | 数据存储     |
 | Prometheus            | 服务监控     |
+| redis                 | 缓存服务     |
+| RabitMQ               | 消息队列     |
 
 ### 工具安装使用
 
