@@ -4,12 +4,14 @@
 
 | 依赖工具              | 用途         |
 | --------------------- | ------------ |
+| Pipenv                | 依赖包管理  |
 | fastapi（python3.8+） | 后端接口实现 |
 | pytest                | 单元测试     |
 | sentry                | 异常监控     |
 | Github Action         | CI/CD        |
 | Vue 3.0 (typescript)  | 前端实现     |
 | MongoDB               | 数据存储     |
+| PostgreSQL            | 数据存储     |
 | Prometheus            | 服务监控     |
 | redis                 | 缓存服务     |
 | RabitMQ               | 消息队列     |
